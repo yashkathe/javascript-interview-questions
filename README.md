@@ -584,6 +584,37 @@
 
    The prototype on object instance is available through **Object.getPrototypeOf(object)** or **\_\_proto__** property whereas prototype on constructors function is available through **Object.prototype**.
 
+    
+    **EXAMPLE:**
+
+    ```javascript
+    // Constructor function for creating Person objects
+    function Person(name) {
+      this.name = name;
+    }
+
+    // Adding a method to the prototype of Person
+    Person.prototype.greet = function() {
+      console.log(`Hello, my name is ${this.name}`);
+    };
+
+    // Creating an instance of Person
+    const person1 = new Person("Alice");
+
+    // Using Object.getPrototypeOf(object) to access the prototype
+    const prototype1 = Object.getPrototypeOf(person1);
+    console.log(prototype1 === Person.prototype); // Outputs: true
+
+    // Using the __proto__ property to access the prototype
+    const prototype2 = person1.__proto__;
+    console.log(prototype2 === Person.prototype); // Outputs: true
+
+    ```
+
+    Imagine you have a Person object and you want to give all instances of Person a method called greet. Instead of adding this method to each individual instance, you can add it to the prototype of Person so that all instances automatically have access to it. 
+
+    By using the prototype, we avoid duplicating the greet method for every instance of Person. This makes our code more memory-efficient and easier to maintain. 
+
    ![Screenshot](images/prototype_chain.png)
 
    **[⬆ Back to Top](#table-of-contents)**
@@ -762,6 +793,27 @@
 10. ### What are lambda or arrow functions
 
     An arrow function is a shorter syntax for a function expression and does not have its own **this, arguments, super, or new.target**. These functions are best suited for non-method functions, and they cannot be used as constructors.
+
+    **this** keyword inside an arrow function is different from its behavior inside a regular function. In short, arrow functions do not have their own **this** context; they inherit the this value from the surrounding code.
+
+    ```javascript
+    const obj = {
+      name: "Alice",
+      regularFunction: function() {
+        console.log("Regular Function:", this.name);
+      },
+      arrowFunction: () => {
+        console.log("Arrow Function:", this.name);
+      }
+    };
+
+    obj.regularFunction(); 
+    // Outputs: Regular Function: Alice
+
+    obj.arrowFunction();   
+    // Outputs: Arrow Function: undefined (or whatever the outer 'this' is)
+    // Since arrow functions don't have their own 'this', it will capture the global or outer 'this'
+    ```
 
     **[⬆ Back to Top](#table-of-contents)**
 
